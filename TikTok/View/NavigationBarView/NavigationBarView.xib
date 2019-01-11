@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NavigationBarView" customModule="TikTok" customModuleProvider="target">
+            <connections>
+                <outlet property="btnBack" destination="EQs-4I-ylq" id="A4J-6a-2kE"/>
+                <outlet property="btnOption" destination="VKF-ZG-avN" id="P0z-Y9-ulI"/>
+                <outlet property="containerView" destination="iN0-l3-epB" id="rzP-uh-c9O"/>
+                <outlet property="lblBorder" destination="wfc-6Y-xbh" id="tjZ-wW-unR"/>
+                <outlet property="lblTitle" destination="Yxf-AN-sc3" id="A8M-gv-HRv"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQs-4I-ylq">
+                    <rect key="frame" x="15" y="29" width="40" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="XTi-N8-TVd"/>
+                        <constraint firstAttribute="width" constant="40" id="x2h-vn-8HU"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="8" minY="5" maxX="8" maxY="5"/>
+                    <state key="normal" image="back_icon"/>
+                    <connections>
+                        <action selector="backAction:" destination="-1" eventType="touchUpInside" id="3KJ-8h-Hcb"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user_name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yxf-AN-sc3">
+                    <rect key="frame" x="150" y="33" width="75.5" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="ML2-vW-KI1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VKF-ZG-avN">
+                    <rect key="frame" x="330" y="29" width="40" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="dC3-Ip-va5"/>
+                        <constraint firstAttribute="width" constant="40" id="p9X-aP-25o"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                    <state key="normal" image="menu"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfc-6Y-xbh">
+                    <rect key="frame" x="0.0" y="63.5" width="375" height="0.5"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="D51-Fe-er7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="VKF-ZG-avN" secondAttribute="bottom" constant="5" id="4Jg-bp-nE6"/>
+                <constraint firstItem="wfc-6Y-xbh" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="8Lc-w4-W4s"/>
+                <constraint firstItem="Yxf-AN-sc3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="K3G-Ri-W8v"/>
+                <constraint firstItem="wfc-6Y-xbh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XwH-0v-dix"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VKF-ZG-avN" secondAttribute="trailing" constant="5" id="YBt-p5-TjS"/>
+                <constraint firstItem="EQs-4I-ylq" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="aIc-Tp-cD3"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="EQs-4I-ylq" secondAttribute="bottom" constant="5" id="alu-yl-s9Z"/>
+                <constraint firstAttribute="trailing" secondItem="wfc-6Y-xbh" secondAttribute="trailing" id="gKX-sY-wcZ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Yxf-AN-sc3" secondAttribute="bottom" constant="10" id="skW-p5-VJB"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back_icon" width="64" height="64"/>
+        <image name="menu" width="64" height="64"/>
+    </resources>
+</document>
