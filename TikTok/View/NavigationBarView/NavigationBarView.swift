@@ -29,6 +29,7 @@ class NavigationBarView: UIView {
         Bundle.main.loadNibNamed("NavigationBarView", owner: self, options: nil)
         addSubview(containerView)
         containerView.frame = self.bounds
+        containerView.backgroundColor = appColor
         containerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         // do your stuff here
         lblBorder.frame.size.height = 0.5

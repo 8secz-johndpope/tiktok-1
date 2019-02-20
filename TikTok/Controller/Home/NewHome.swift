@@ -72,14 +72,14 @@ extension NewHome: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = catCollection.dequeueReusableCell(withReuseIdentifier: "catcell", for: indexPath) as! HomeCategoryCell
+        cell.backgroundColor = appColor
         cell.cat_icon.image = UIImage.init(named: catIcon[indexPath.row])
         
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let board = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = board.instantiateViewController(withIdentifier: "home") as! HomeVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "openvideo"), object: nil, userInfo: nil)
+
     }
     
     

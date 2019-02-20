@@ -10,11 +10,10 @@ import UIKit
 
 class OptionVC: Default {
 
-    var header = ["Account","Privacy and security","Support","About"]
-    var accountItem = ["Edit profile","Language","Change Password","Logout"]
+    var header = ["Account","Privacy and security","About"]
+    var accountItem = ["Edit profile","Wallet","Achievements","Share Profile","Privacy & Security","Logout"]
     var privacyItem = ["Privacy & policy","Faq","Others"]
-    var supoortItem = ["Help Center","Report"]
-    var AboutItem = ["About Us","Terms of Use"]
+    var AboutItem = ["About Us","Help Center","Terms of Use","Report"]
     @IBOutlet weak var viewNav: NavigationBarView!
     @IBOutlet weak var heightNav: NSLayoutConstraint!
     @IBOutlet weak var tableOption: UITableView!
@@ -45,8 +44,7 @@ extension OptionVC : UITableViewDelegate,UITableViewDataSource {
             return accountItem.count
         case 1:
             return privacyItem.count
-        case 2:
-            return supoortItem.count
+       
         default:
             return AboutItem.count
         }
@@ -60,8 +58,7 @@ extension OptionVC : UITableViewDelegate,UITableViewDataSource {
             cell.lblName.text = accountItem[indexPath.row]
         case 1:
             cell.lblName.text = privacyItem[indexPath.row]
-        case 2:
-            cell.lblName.text = supoortItem[indexPath.row]
+        
         default:
             cell.lblName.text = AboutItem[indexPath.row]
         }
@@ -75,10 +72,51 @@ extension OptionVC : UITableViewDelegate,UITableViewDataSource {
         return 40
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && indexPath.row == 3 {
-            self.logoutUser()
+        
+        switch indexPath.section {
+        case 0:
+            print("click")
+            switch indexPath.row {
+            case 0:
+                print("click")
+                let board = UIStoryboard.init(name: "Main", bundle: nil)
+                let vc = board.instantiateViewController(withIdentifier: "updateprofile") as! UpdateProfileVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            case 1:
+                print("click")
+                let board = UIStoryboard.init(name: "Main", bundle: nil)
+                let vc = board.instantiateViewController(withIdentifier: "wallet") as! WalletVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            case 2:
+                print("click")
+                let board = UIStoryboard.init(name: "Main", bundle: nil)
+                let vc = board.instantiateViewController(withIdentifier: "achievements") as! AchievementsVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            case 3:
+                print("click")
+            default:
+                self.logoutUser()
+            }
+        case 1:
+            print("click")
+        case 2:
+            print("click")
+        default:
+            print("click")
         }
+        
     }
+  /*  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let returnedView = UIView(frame: CGRect(x:0, y:0, width:displyWidth, height:44)) //set these values as necessary
+        returnedView.backgroundColor = UIColor.lightGrayColor()
+        
+        let label = UILabel(frame: CGRectMake(labelX, labelY, labelWidth, labelHeight))
+        label.text = self.sectionHeaderTitleArray[section]
+        returnedView.addSubview(label)
+        
+        return returnedView
+    }
+ */
     
     
     

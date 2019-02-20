@@ -10,9 +10,17 @@ import UIKit
 import AVFoundation
 import AssetsLibrary
 
-class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDelegate , AVCaptureMetadataOutputObjectsDelegate {
-    @IBOutlet var filterButtonsContainer: UIView!
-    @IBOutlet var switchCameraButton: UIButton!
+class VideoRecorderVC: UIViewController , AVCaptureVideoDataOutputSampleBufferDelegate , AVCaptureMetadataOutputObjectsDelegate {
+    
+    @IBOutlet weak var switchCameraButton: UIButton!
+    @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var btnClose: UIButton!
+    @IBOutlet weak var viewFilterBtn: UIView!
+    @IBOutlet weak var recordsButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var viewCapture: UIView!
+    @IBOutlet weak var scrollFilter: UIScrollView!
+    var process : String?
     var captureSession: AVCaptureSession!
     var previewLayer: CALayer!
     var filter: CIFilter!
@@ -21,6 +29,30 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
         let options = [kCIContextWorkingColorSpace : NSNull()]
         return CIContext(eaglContext: eaglContext!, options: options)
     }()
+    
+    var CIFilterNames = ["CIColorClamp",
+                         "CIPhotoEffectChrome",
+                         "CIPhotoEffectFade",
+                         "CIPhotoEffectInstant",
+                         "CIPhotoEffectNoir",
+                         "CIPhotoEffectProcess",
+                         "CIPhotoEffectTonal",
+                         "CIPhotoEffectTransfer",
+                         "CISepiaTone",
+                         "CIVibrance"
+    ]
+    var FilterNames = ["Default",
+                       "Chrome",
+                       "Fade",
+                       "Instant",
+                       "Noir",
+                       "Process",
+                       "Tonal",
+                       "Transfer",
+                       "SepiaTone",
+                       "Vibrance"
+    ]
+    
     lazy var filterNames: [String] = {
         return ["CIColorInvert", "CIPhotoEffectMono", "CIPhotoEffectInstant", "CIPhotoEffectTransfer"]
     }()
@@ -31,7 +63,6 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
     var faceObject: AVMetadataFaceObject?
     
     // Video Records
-    @IBOutlet var recordsButton: UIButton!
     var assetWriter: AVAssetWriter?
     var assetWriterPixelBufferInput: AVAssetWriterInputPixelBufferAdaptor?
     var isWriting = false
@@ -44,15 +75,10 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
         super.viewDidLoad()
         
         previewLayer = CALayer()
-        // previewLayer.bounds = CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)
-        // previewLayer.position = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0)
-        // previewLayer.setAffineTransform(CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0)))
+        
         previewLayer.anchorPoint = CGPoint.zero
         previewLayer.bounds = view.bounds
-        
-        filterButtonsContainer.isHidden = true
-        switchCameraButton.isHidden = true // 两个摄像头可用的时候可以切换摄像头
-        
+    
         self.view.layer.insertSublayer(previewLayer, at: 0)
         
         if TARGET_OS_SIMULATOR != 0 {
@@ -61,6 +87,10 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
         } else {
             setupCaptureSession()
         }
+        designFilter()
+        self.prepareView()
+        self.openCamera()
+     
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -70,6 +100,82 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func designFilter(){
+        // filter design
+        var xCoord: CGFloat = 10
+        let yCoord: CGFloat = 5
+        let buttonWidth:CGFloat = 60
+        let buttonHeight: CGFloat = 60
+        let gapBetweenButtons: CGFloat = 10
+        
+        var itemCount = 0
+        
+        for i in 0..<CIFilterNames.count {
+            itemCount = i
+            
+            // Button properties
+            let filterButton = UIButton(type: .custom)
+            filterButton.frame = CGRect(x: xCoord, y: yCoord, width: buttonWidth, height: buttonHeight)
+            filterButton.tag = itemCount
+            filterButton.addTarget(self, action: #selector(self.filterButtonTapped(sender:)), for: .touchUpInside)
+            filterButton.layer.cornerRadius = 30
+            filterButton.clipsToBounds = true
+            
+            // label properties
+            let filterLabel = UILabel()
+            filterLabel.frame = CGRect(x: xCoord, y: 65, width: buttonWidth, height: 20)
+            filterLabel.text = FilterNames[i]
+            filterLabel.textAlignment = .center
+            filterLabel.font = UIFont.systemFont(ofSize: 12)
+            filterLabel.textColor = UIColor.white
+            filterLabel.backgroundColor = UIColor.clear
+            
+            
+            // CODE FOR FILTERS WILL BE ADDED HERE...
+            
+            // Create filters for each button
+            let ciContext = CIContext(options: nil)
+            let coreImage = CIImage(image: UIImage.init(named: "dummyimg")!)
+            
+            
+            
+            // Assign filtered image to the button
+            if i == 0 {
+                filterButton.setBackgroundImage(UIImage.init(named: "dummyimg"), for: .normal)
+                
+            }else{
+                let filter = CIFilter(name: "\(CIFilterNames[i])" )
+                filter!.setDefaults()
+                filter!.setValue(coreImage, forKey: kCIInputImageKey)
+                
+                let filteredImageData = filter!.value(forKey: kCIOutputImageKey) as! CIImage
+                let filteredImageRef = ciContext.createCGImage(filteredImageData, from: filteredImageData.extent)
+                let imageForButton = UIImage.init(cgImage: filteredImageRef!)
+                
+                filterButton.setBackgroundImage(imageForButton, for: .normal)
+                
+            }
+            //    filterButton.setBackgroundImage(imageForButton, forState: .normal)
+            
+            // Add Buttons in the Scroll View
+            xCoord +=  buttonWidth + gapBetweenButtons
+            scrollFilter.addSubview(filterButton)
+            scrollFilter.addSubview(filterLabel)
+        } // END FOR LOOP
+        
+        
+        // Resize Scroll View
+        scrollFilter.contentSize = CGSize(width: CGFloat((buttonWidth + 10) * CGFloat(CIFilterNames.count)) + 10, height: yCoord)
+        
+        scrollFilter.isHidden = true
+    }
+    
+    @objc func filterButtonTapped(sender: UIButton) {
+        
+        filter = CIFilter(name: "\(CIFilterNames[sender.tag])" )
+        
+        scrollFilter.isHidden = true
     }
     
     func setupCaptureSession() {
@@ -125,10 +231,45 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
         }
         return device!;
     }
+    func recordingStarted(){
+        
+    }
     
-    // MARK: 点击切换按钮切换镜头
+    @IBAction func closeAction(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    @IBAction func captureImageAction(_ sender: UIButton) {
+        recordsButton.setImage(UIImage.init(named: "capture"), for: .normal)
+        process = "capture"
+
+        self.viewCapture.backgroundColor = UIColor.clear
+        
+        //  openCamera()
+    }
+    @IBAction func recordVideoAction(_ sender: UIButton) {
+        recordsButton.setImage(UIImage.init(named: "recording"), for: .normal)
+        process = "recording"
+        self.viewCapture.backgroundColor = UIColor.clear
+      //  openCamera()
+    }
+    func prepareView(){
+        if process != "recording"{
+            recordsButton.setImage(UIImage.init(named: "capture"), for: .normal)
+
+        }else{
+            recordsButton.setImage(UIImage.init(named: "recording"), for: .normal)
+
+        }
+    }
     
-    @IBAction func clickSwitchCameraButton(sender: UIButton){
+    @IBAction func FilterAction(_ sender: UIButton) {
+        
+        scrollFilter.isHidden = false
+        
+    }
+    // Switch camera front or back
+   
+    @IBAction func switchCameraAction(_ sender: UIButton) {
         guard let currentDeviceInput = self.currentDeviceInput else { return }
         
         captureSession.removeInput(currentDeviceInput)
@@ -155,69 +296,78 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
         faceObject = nil
     }
     
-    @IBAction func openCamera(sender: UIButton) {
-        sender.isEnabled = false
+    func openCamera() {
         captureSession.startRunning()
-        self.filterButtonsContainer.isHidden = false
         
-        let captureDevices = AVCaptureDevice.devices(for: .video)
-        switchCameraButton.isHidden = captureDevices.count < 1
+   //     let captureDevices = AVCaptureDevice.devices(for: .video)
+     //   switchCameraButton.isHidden = captureDevices.count < 1
     }
     
-    @IBAction func applyFilter(sender: UIButton) {
-        let filterName = filterNames[sender.tag]
-        filter = CIFilter(name: filterName)
-    }
+   
     
-    @IBAction func takePicture(sender: UIButton) {
+    func takePicture() {
         if ciImage == nil || isWriting {
             return
         }
-        sender.isEnabled = false
+        recordsButton.isEnabled = false
         captureSession.stopRunning()
 
         let cgImage = context.createCGImage(ciImage, from: ciImage.extent)
         ALAssetsLibrary().writeImage(toSavedPhotosAlbum: cgImage, metadata: ciImage.properties) { (url, error) in
             if error == nil {
-                print("保存成功")
+                print("success")
                 print(url!)
             } else {
-                let alert = UIAlertController(title: "错误", message: error?.localizedDescription, preferredStyle: .alert)
+                let alert = UIAlertController(title: "failed", message: error?.localizedDescription, preferredStyle: .alert)
                 self.present(alert, animated: true, completion: nil)
             }
             self.captureSession.startRunning()
-            sender.isEnabled = true
+            self.recordsButton.isEnabled = true
         }
     }
     
     // MARK: - Video Records
     
-    @IBAction func record() {
+    @IBAction func recordAction(_ sender: UIButton) {
+        if process != "capture" {
+            //start video recording
+            record()
+        }else{
+            // capture image
+            takePicture()
+        }
+    }
+    func record() {
         if self.isWriting {
             self.isWriting = false
             self.assetWriterPixelBufferInput = nil
-            self.recordsButton.isEnabled = false
+         //   self.recordsButton.isEnabled = false
             self.assetWriter?.finishWriting(completionHandler: {[unowned self] () -> Void in
                 DispatchQueue.main.async {
-                    print("录制完成")
-                    self.recordsButton.setTitle("处理中...", for: .normal)
+                    print("start recording")
+                    UIView.animate(withDuration: 0.1, animations: {
+                        self.recordsButton.frame.size = CGSize(width: 50, height:50)
+                        self.viewCapture.layoutIfNeeded()
+                    })
+                    
+                   // self.recordsButton.setTitle("recording...", for: .normal)
                 }
                 
                 self.saveMovieToCameraRoll() {
                     DispatchQueue.main.async {
-                        self.recordsButton.isEnabled = true
-                        self.recordsButton.setTitle("开始录制", for: .normal)
-                        self.switchCameraButton.isEnabled = true
+                   //     self.recordsButton.isEnabled = true
+                    //    self.recordsButton.setTitle("Record", for: .normal)
+                    //    self.switchCameraButton.isEnabled = true
                     }
                 }
             })
         } else {
             self.createWriter()
-            self.recordsButton.setTitle("停止录制...", for: .normal)
+          //  self.recordsButton.setTitle("recording...", for: .normal)
             self.assetWriter?.startWriting()
             self.assetWriter?.startSession(atSourceTime: self.currentSampleTime!)
             self.isWriting = true
-            self.switchCameraButton.isEnabled = false
+          //  self.switchCameraButton.isEnabled = false
         }
     }
     
@@ -246,7 +396,7 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
         let exist = fm.fileExists(atPath: url.path!)
         
         if exist {
-            print("删除之前的临时文件")
+            print("exits")
             do {
                 try fm.removeItem(at: url as URL)
             } catch let error as NSError {
@@ -290,6 +440,16 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
             assetWriter!.add(assetWriterVideoInput)
         } else {
             print("不能添加视频writer的input \(assetWriterVideoInput)")
+        }
+        
+        // add audio input
+        let audioWriterInput = AVAssetWriterInput(mediaType: AVMediaType.audio, outputSettings: nil)
+        
+        audioWriterInput.expectsMediaDataInRealTime = true
+        
+        if (assetWriter?.canAdd(audioWriterInput))! {
+            assetWriter?.add(audioWriterInput)
+            print("audio input added")
         }
     }
     
@@ -362,9 +522,10 @@ class ViewController: UIViewController , AVCaptureVideoDataOutputSampleBufferDel
                 self.filter.setValue(outputImage, forKey: kCIInputImageKey)
                 outputImage = self.filter.outputImage!
             }
-            if self.faceObject != nil {
+          /*  if self.faceObject != nil {
                 outputImage = self.makeFaceWithCIImage(inputImage: outputImage, faceObject: self.faceObject!)
             }
+ */
             
             // 录制视频的处理
             if self.isWriting {

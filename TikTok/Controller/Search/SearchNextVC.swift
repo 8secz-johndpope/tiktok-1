@@ -31,7 +31,6 @@ class SearchNextVC: Default {
         navBar.btnBack.addTarget(self, action: #selector(self.backAction), for: .touchUpInside)
         
         navBar.addSubview(searchBar)
-        setBorder(view: navBar)
         setBorder(view: tabbar)
         tablePeople.delegate = self
         tablePeople.dataSource = self
@@ -62,11 +61,11 @@ class SearchNextVC: Default {
         self.viewTag.isHidden = true
         tabBtnUser.alpha = 1.0
         tabBtnMusic.alpha = 0.0
-        tabBtnHashtag.alpha = 0.3
+        tabBtnHashtag.alpha = 0.5
        
-        tabBtnUser.setImage(UIImage.init(named: "profile_selected"), for: .normal)
-        tabBtnMusic.setImage(UIImage.init(named: "music"), for: .normal)
-        tabBtnHashtag.setImage(UIImage.init(named: "hashtag"), for: .normal)
+    //    tabBtnUser.setImage(UIImage.init(named: "profile_selected"), for: .normal)
+    //    tabBtnMusic.setImage(UIImage.init(named: "music"), for: .normal)
+     //   tabBtnHashtag.setImage(UIImage.init(named: "hashtag"), for: .normal)
 
 
     }
@@ -74,9 +73,9 @@ class SearchNextVC: Default {
         self.viewPeople.isHidden = true
         self.viewMusic.isHidden = false
         self.viewTag.isHidden = true
-        tabBtnUser.alpha = 0.3
+        tabBtnUser.alpha = 0.5
         tabBtnMusic.alpha = 1.0
-        tabBtnHashtag.alpha = 0.3
+        tabBtnHashtag.alpha = 0.5
         tabBtnUser.setImage(UIImage.init(named: "profile"), for: .normal)
         tabBtnMusic.setImage(UIImage.init(named: "music_selected"), for: .normal)
         tabBtnHashtag.setImage(UIImage.init(named: "hashtag"), for: .normal)
@@ -87,12 +86,12 @@ class SearchNextVC: Default {
         self.viewPeople.isHidden = true
         self.viewMusic.isHidden = true
         self.viewTag.isHidden = false
-        tabBtnUser.alpha = 0.3
+        tabBtnUser.alpha = 0.5
         tabBtnMusic.alpha = 0.0
         tabBtnHashtag.alpha = 1.0
-        tabBtnUser.setImage(UIImage.init(named: "profile"), for: .normal)
-        tabBtnMusic.setImage(UIImage.init(named: "music"), for: .normal)
-        tabBtnHashtag.setImage(UIImage.init(named: "hashtag_selected"), for: .normal)
+       // tabBtnUser.setImage(UIImage.init(named: "profile"), for: .normal)
+      //  tabBtnMusic.setImage(UIImage.init(named: "music"), for: .normal)
+     //   tabBtnHashtag.setImage(UIImage.init(named: "hashtag_selected"), for: .normal)
       
 
     }
@@ -121,15 +120,17 @@ extension SearchNextVC : UITableViewDelegate, UITableViewDataSource {
         
         if tableView == tablePeople {
             let cell = tablePeople.dequeueReusableCell(withIdentifier: "peoplecell", for: indexPath) as! SearchPeopleTableCell
-            
+            cell.backgroundColor = appColor
             return cell
         }else if tableView == tableMusic {
             let cell = tableMusic.dequeueReusableCell(withIdentifier: "musiccell", for: indexPath) as! SearchMusicTableCell
-            
+            cell.backgroundColor = appColor
+
             return cell
         }else{
             let cell = tableHastag.dequeueReusableCell(withIdentifier: "hastagcell", for: indexPath) as! SearchHashtagTableCell
-            
+            cell.backgroundColor = appColor
+
             return cell
         }
         

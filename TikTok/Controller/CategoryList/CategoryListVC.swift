@@ -50,7 +50,15 @@ extension CategoryListVC : UITableViewDelegate,UITableViewDataSource{
         let vc = board.instantiateViewController(withIdentifier: "home") as! HomeVC
         self.navigationController?.pushViewController(vc, animated: true)
  */
+        revealViewController().revealToggle(self)
+        //SWRevealViewController.revealToggle(_:)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "openvideo"), object: nil, userInfo: nil)
+        
 
-        self.performSegue(withIdentifier: "video", sender: self)
+
+        //self.performSegue(withIdentifier: "video", sender: self)
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }

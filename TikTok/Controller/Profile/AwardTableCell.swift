@@ -10,11 +10,15 @@ import UIKit
 
 class AwardTableCell: UITableViewCell {
 
+    @IBOutlet weak var imgBanner: UIImageView!
     @IBOutlet weak var imgStatus: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         viewShadow(view: imgStatus)
+        imgBanner.layer.borderWidth = 1
+        imgBanner.layer.borderColor = UIColor.white.cgColor
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -30,7 +30,7 @@
                         <constraint firstAttribute="height" constant="30" id="XTi-N8-TVd"/>
                         <constraint firstAttribute="width" constant="40" id="x2h-vn-8HU"/>
                     </constraints>
-                    <inset key="imageEdgeInsets" minX="8" minY="5" maxX="8" maxY="5"/>
+                    <inset key="imageEdgeInsets" minX="5" minY="5" maxX="10" maxY="5"/>
                     <state key="normal" image="back_icon"/>
                     <connections>
                         <action selector="backAction:" destination="-1" eventType="touchUpInside" id="3KJ-8h-Hcb"/>
@@ -42,7 +42,7 @@
                         <constraint firstAttribute="height" constant="21" id="ML2-vW-KI1"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VKF-ZG-avN">
@@ -65,7 +65,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="VKF-ZG-avN" secondAttribute="bottom" constant="5" id="4Jg-bp-nE6"/>
                 <constraint firstItem="wfc-6Y-xbh" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="8Lc-w4-W4s"/>

@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import CoreMedia
 
 class FilterList: UIViewController {
 
+    let ColorControl = CIFilter(name: "CIColorControls", withInputParameters: ["inputSaturation" : 1.5])
+  //  let ColorControl = CIFilter(name: "CIColorCrossPolynomial")
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

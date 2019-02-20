@@ -21,10 +21,27 @@ class TabBarController: Default {
         viewTab.btnMessage.addTarget(self, action: #selector(showMessage), for: .touchUpInside)
         viewTab.btnProfile.addTarget(self, action: #selector(showProfile), for: .touchUpInside)
         
+        // add observer for show video on tabbar
+        NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify), name: NSNotification.Name(rawValue: "openvideo"), object: nil)
+
+        
         //viewShadow(view: viewTab.btnNew)
         showHome()
 
         // Do any additional setup after loading the view.
+    }
+    @objc func doThisWhenNotify() {
+        print("openvideo")
+        //let info = notification.userInfo
+        //load your stuff here
+        clearChildVc()
+        let vc = storyboard?.instantiateViewController(withIdentifier: "home") as! HomeVC
+        self.addChildViewController(vc)
+        vc.view.frame = CGRect(x: 0, y: 0, width: self.viewContainer.frame.size.width, height: self.viewContainer.frame.size.height)
+        self.viewContainer.addSubview(vc.view)
+        vc.didMove(toParentViewController: self)
+        lightTabBar()
+        
     }
     
     @objc func showHome(){
@@ -34,7 +51,7 @@ class TabBarController: Default {
         vc.view.frame = CGRect(x: 0, y: 0, width: self.viewContainer.frame.size.width, height: self.viewContainer.frame.size.height)
         self.viewContainer.addSubview(vc.view)
         vc.didMove(toParentViewController: self)
-        darkTabBar()
+        lightTabBar()
     }
 
     @objc func showSearch(){
@@ -45,17 +62,17 @@ class TabBarController: Default {
         vc.view.frame = CGRect(x: 0, y: 0, width: self.viewContainer.frame.size.width, height: self.viewContainer.frame.size.height)
         self.viewContainer.addSubview(vc.view)
         vc.didMove(toParentViewController: self)
-        darkTabBar()
+        lightTabBar()
     }
     @objc func showNewPost(){
         let board = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = board.instantiateViewController(withIdentifier: "addvideo") as! AddVideoVC
+        let vc = board.instantiateViewController(withIdentifier: "AddVideoOption") as! AddVideoOptionVC
         self.navigationController?.pushViewController(vc, animated: true)    }
     @objc func showMessage(){
 
         clearChildVc()
-        darkTabBar()
-        
+        lightTabBar()
+
         if getLogin() != true{
             goToLogin()
         }else{
@@ -70,7 +87,8 @@ class TabBarController: Default {
     }
     @objc func showProfile(){
         clearChildVc()
-        darkTabBar()
+        lightTabBar()
+        viewTab.backgroundColor = appColor
         if getLogin() != true{
             goToLogin()
         }else{
@@ -85,6 +103,7 @@ class TabBarController: Default {
     }
     
     func clearChildVc(){
+        viewTab.backgroundColor = UIColor.clear
         if self.childViewControllers.count > 0 {
             let viewControllers:[UIViewController] = self.childViewControllers
             for viewContoller in viewControllers{

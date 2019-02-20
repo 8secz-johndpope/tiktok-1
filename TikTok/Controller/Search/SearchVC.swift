@@ -18,7 +18,6 @@ class SearchVC: Default,UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        setBorder(view: viewNav)
         viewNav.btnBack.isHidden = true
         viewNav.btnOption.removeFromSuperview()
         viewNav.lblTitle.removeFromSuperview()

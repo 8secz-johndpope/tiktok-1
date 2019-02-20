@@ -7,13 +7,17 @@
 //00d2fc3
 import UIKit
 
+//App color theme
+let appColor = UIColor(red:0.04, green:0.06, blue:0.07, alpha:1.0) //090F13
+
+
 class Default: UIViewController {
-    
     let displyHeight = UIScreen.main.bounds.height
     let displyWidth = UIScreen.main.bounds.width
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = appColor
 
         // Do any additional setup after loading the view.
     }
@@ -35,6 +39,9 @@ class Default: UIViewController {
     
     @objc func backAction(){
         navigationController?.popViewController(animated: true)
+    }
+    @objc func backToRootAction(){
+        navigationController?.popToRootViewController(animated: true)
     }
     
     func getDevice() ->CGFloat{
@@ -121,10 +128,35 @@ class Default: UIViewController {
     func setBorder(view: Any){
         
         (view as AnyObject).layer.masksToBounds = false
-        (view as AnyObject).layer.borderColor = UIColor.gray.cgColor
+        (view as AnyObject).layer.borderColor = UIColor.darkGray.cgColor
         (view as AnyObject).layer.borderWidth = 0.5
         
         
     }
     
+    // use hex for uicolor
+    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+        
+        var rgbValue:UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
 }
+

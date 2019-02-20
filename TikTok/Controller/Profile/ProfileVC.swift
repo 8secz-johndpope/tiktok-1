@@ -19,7 +19,6 @@ class ProfileVC: Default {
     @IBOutlet weak var lblFullName: UILabel!
     @IBOutlet weak var viewTab: UIView!
     @IBOutlet weak var lblDescription: UILabel!
-    @IBOutlet weak var heightProfileView: NSLayoutConstraint!
     @IBOutlet weak var collection: UICollectionView!
     
     
@@ -33,14 +32,14 @@ class ProfileVC: Default {
         collection.dataSource = self
         
         setBorder(view: viewTab)
-        setBorder(view: viewNav)
+       // setBorder(view: viewNav)
         imgProfile.layer.cornerRadius = 40
         imgProfile.layer.borderColor = UIColor.black.cgColor
         imgProfile.layer.borderWidth = 0.5
         
         btnFollow.layer.cornerRadius = 4
         lblDescription.sizeToFit()
-        lblDescription.text = "bio \nWrite your\nTest description"
+        lblDescription.text = "Bio \nWrite your\nTest description"
         viewNav.btnBack.isHidden = true
       //  heightProfileView.constant = 170 + (lblDescription.bounds.height)
         self.view.layoutIfNeeded()
@@ -61,7 +60,12 @@ class ProfileVC: Default {
         let vc = board.instantiateViewController(withIdentifier: "option") as! OptionVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
+    @IBAction func AchievementAction(_ sender: UIButton) {
+        let board = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = board.instantiateViewController(withIdentifier: "award") as! AwardVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 
 }
 extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

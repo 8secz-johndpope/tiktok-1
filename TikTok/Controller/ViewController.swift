@@ -12,19 +12,19 @@ import AVFoundation
 import CoreMedia
 
 let CMYKHalftone = "CMYK Halftone"
-let CMYKHalftoneFilter = CIFilter(name: "CICMYKHalftone", withInputParameters: ["inputWidth" : 20, "inputSharpness": 1])
+let CMYKHalftoneFilter = CIFilter(name: "CILinearToSRGBToneCurve")
 
 let ComicEffect = "Comic Effect"
-let ComicEffectFilter = CIFilter(name: "CIComicEffect")
+let ComicEffectFilter = CIFilter(name: "CIVibrance", withInputParameters: ["inputAmount" : 10])
 
 let Crystallize = "Crystallize"
-let CrystallizeFilter = CIFilter(name: "CICrystallize", withInputParameters: ["inputRadius" : 30])
+let CrystallizeFilter = CIFilter(name: "CIColorCrossPolynomial")
 
 let Edges = "Edges"
 let EdgesEffectFilter = CIFilter(name: "CIEdges", withInputParameters: ["inputIntensity" : 10])
 
 let HexagonalPixellate = "Hex Pixellate"
-let HexagonalPixellateFilter = CIFilter(name: "CIHexagonalPixellate", withInputParameters: ["inputScale" : 40])
+let HexagonalPixellateFilter = CIFilter(name: "CIColorCubeWithColorSpace", withInputParameters: ["inputCubeDimension" : 75])
 
 let Invert = "Invert"
 let InvertFilter = CIFilter(name: "CIColorInvert")
@@ -49,6 +49,7 @@ let Filters = [
     LineOverlay: LineOverlayFilter,
     Posterize: PosterizeFilter
 ]
+let fArr = [CMYKHalftoneFilter,ComicEffectFilter,CrystallizeFilter,EdgesEffectFilter,HexagonalPixellateFilter,InvertFilter,PointillizeFilter,LineOverlayFilter,PosterizeFilter]
 //let filter = Filters.sorted(by: Filters.keys)
 //let FilterNames = [String](Filters.keys).sort()
 let FilterNames = ["CMYK Halftone","Comic Effect","Crystallize","Edges","Hex Pixellate","Invert","Pointillize","Line Overlay","Posterize"]
