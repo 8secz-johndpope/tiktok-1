@@ -40,10 +40,12 @@ class LoginPhoneVC: Default {
         print("process : ", process)
         viewOtp.isHidden = true
 
-        if process != "signup" {
+        if process == "signin" {
             viewForSignIn()
-        }else{
+        }else if process == "signup"{
             viewForSignUp()
+        }else{
+            viewForForgotPassword()
         }
 
     }
@@ -88,6 +90,11 @@ class LoginPhoneVC: Default {
         btnWithEmailPassword.setTitle("Sign Up with email & password", for: .normal)
     }
     
+    func viewForForgotPassword(){
+        lblSingin.text = "Forgot Password"
+        btnWithEmailPassword.setTitle("Sign In with email & password", for: .normal)
+    }
+    
     @IBAction func emailSignIn(_ sender: UIButton) {
         backAction()
     }
@@ -103,7 +110,7 @@ class LoginPhoneVC: Default {
                 self.goToVideo()
             }
 
-        }else{
+        }else if lblSingin.text == "Sign Up"{
             if viewPassword.isHidden != true {
                 UserDefaults.standard.set("id", forKey: "id")
                 // go to video page
@@ -120,6 +127,22 @@ class LoginPhoneVC: Default {
 
             }
 
+        }else{
+            if viewPassword.isHidden != true {
+                UserDefaults.standard.set("id", forKey: "id")
+                // back to login
+                backAction()
+
+            }else{
+                if viewOtp.isHidden == true {
+                    viewOtp.isHidden = false
+                }else{
+                    self.view.addSubview(viewPassword)
+                    viewPassword.isHidden = false
+                }
+                
+                
+            }
         }
         
     }

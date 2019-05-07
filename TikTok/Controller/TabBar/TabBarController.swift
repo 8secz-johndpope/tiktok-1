@@ -73,15 +73,16 @@ class TabBarController: Default {
         clearChildVc()
         lightTabBar()
 
-        if getLogin() != true{
-            goToLogin()
-        }else{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "message") as! NotificationVC
-            self.addChildViewController(vc)
-            vc.view.frame = CGRect(x: 0, y: 0, width: self.viewContainer.frame.size.width, height: self.viewContainer.frame.size.height)
-            self.viewContainer.addSubview(vc.view)
-            vc.didMove(toParentViewController: self)
-        }
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ELearning") as! ELearningVC
+        self.addChildViewController(vc)
+        vc.view.frame = CGRect(x: 0, y: 0, width: self.viewContainer.frame.size.width, height: self.viewContainer.frame.size.height)
+        self.viewContainer.addSubview(vc.view)
+        vc.didMove(toParentViewController: self)
+//        if getLogin() != true{
+//            goToLogin()
+//        }else{
+//            
+//        }
 
         
     }

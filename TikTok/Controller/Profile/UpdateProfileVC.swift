@@ -47,6 +47,7 @@ class UpdateProfileVC: Default,UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         self.view.layoutIfNeeded()
+        
 
     }
 

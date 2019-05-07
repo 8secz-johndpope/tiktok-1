@@ -121,5 +121,11 @@ class LoginVC: Default {
         self.goToVideo()
     }
     
-
+    @IBAction func getHelpInSignInClick(_ sender: Any) {
+        let board = UIStoryboard.init(name: "Login", bundle: nil)
+        let vc = board.instantiateViewController(withIdentifier: "LoginPhone") as! LoginPhoneVC
+        vc.process = "forgotpassword"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }

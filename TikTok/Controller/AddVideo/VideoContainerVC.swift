@@ -191,13 +191,7 @@ class VideoConatinerVC: Default , AVCaptureVideoDataOutputSampleBufferDelegate {
     }
     @IBAction func FilterAction(_ sender: UIButton) {
 
-   /*     if i < fArr.count{
-            self.filter = fArr[i + 1]
-            i = i + 1
-        }else{
-            self.view.makeToast("limited filter avail")
-        }
-     */
+   
         scrollFilter.isHidden = false
         
     }

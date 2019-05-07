@@ -10,7 +10,7 @@ import UIKit
 
 class NewHome: Default {
 
-    var catIcon = ["cat1","cat2","cat3","cat4","cat5","cat6","cat7","cat8","cat9","cat10","cat11","cat12","cat13","cat14","cat15","cat16"]
+    var catIcon = ["cat1","cat2","cat3","cat1","cat2","cat3","cat1","cat2","cat3","cat1","cat2","cat3","cat1","cat2","cat3","cat1"]
     @IBOutlet weak var viewNav: UIView!
     @IBOutlet weak var heightNav: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -56,11 +56,11 @@ class NewHome: Default {
         }
     }
 
-    @IBAction func showCategory(_ sender: UIButton) {
-       /* let board = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = board.instantiateViewController(withIdentifier: "categorylist") as! CategoryListVC
+    @IBAction func showNotification(_ sender: UIButton) {
+        let board = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = board.instantiateViewController(withIdentifier: "message") as! NotificationVC
         self.navigationController?.pushViewController(vc, animated: true)
- */
+ 
         
         
     }

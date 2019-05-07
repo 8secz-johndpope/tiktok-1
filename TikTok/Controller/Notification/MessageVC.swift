@@ -15,9 +15,10 @@ class NotificationVC: Default {
     @IBOutlet weak var table: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewNav.btnBack.isHidden = true
         viewNav.btnOption.isHidden = true
         viewNav.lblTitle.text = "Notifications"
+        viewNav.btnBack.addTarget(self, action: #selector(self.backAction), for: .touchUpInside)
+
        // setBorder(view: viewNav)
         
         table.delegate = self

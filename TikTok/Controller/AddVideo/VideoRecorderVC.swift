@@ -376,7 +376,12 @@ class VideoRecorderVC: UIViewController , AVCaptureVideoDataOutputSampleBufferDe
             if let errorDescription = error?.localizedDescription {
                 print("写入视频错误：\(errorDescription)")
             } else {
+                print(url?.absoluteString)
                 self.checkForAndDeleteFile()
+                let board = UIStoryboard.init(name: "Main", bundle: nil)
+                let vc = board.instantiateViewController(withIdentifier: "videoeditor") as! VideoEditorVC
+                vc.videoPath = url?.absoluteString
+                self.navigationController?.pushViewController(vc, animated: true)
                 print("写入视频成功")
             }
             
@@ -385,9 +390,13 @@ class VideoRecorderVC: UIViewController , AVCaptureVideoDataOutputSampleBufferDe
     }
     
     func movieURL() -> NSURL {
+        let fm = FileManager.default
+        let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        let myurl = docsurl.appendingPathComponent("tmpMov.mov")
+        
         let tempDir = NSTemporaryDirectory()
         let url = NSURL(fileURLWithPath: tempDir).appendingPathComponent("tmpMov.mov")
-        return url! as NSURL
+        return myurl as NSURL
     }
     
     func checkForAndDeleteFile() {
